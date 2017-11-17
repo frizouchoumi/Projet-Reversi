@@ -8,3 +8,4 @@ A FAIRE :
 - impression du tableau de jeu en fonction des classes (Romain + Louis)
 - lecture des commandes et mise à jour du plateau (Javier)
 - Type de structure de données (Farkas)
+TEST
