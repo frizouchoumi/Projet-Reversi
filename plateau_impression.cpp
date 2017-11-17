@@ -6,6 +6,10 @@ using std::endl;
 using std::string;
 using std::ifstream;
 
+/* Ce code imprime juste un plateau mais n'agit pas du tout en fonction des cases du plateau
+ * NE PAS RE MODIFIER, BLC de ce code
+ */
+
 int imprimePlateau(){
 	for(char i='a';i<='h';i++)
 		cout << '\t' << i;
