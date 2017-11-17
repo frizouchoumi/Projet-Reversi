@@ -1,2 +1,4 @@
+CXXFLAGS= -std=c++11 -w
+
 all : Case.cpp
-	g++ Case.cpp -o Case
+	g++ $(CXXFLAGS) Case.cpp -o Case
