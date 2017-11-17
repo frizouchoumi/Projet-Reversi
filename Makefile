@@ -1,2 +1,2 @@
-all : plateau.cpp
-	g++ plateau.cpp -o plateau
+all : Case.cpp
+	g++ Case.cpp -o Case
