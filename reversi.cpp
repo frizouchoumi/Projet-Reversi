@@ -39,7 +39,7 @@ void init_board(int* board){
 }
 
 bool check_input(int* board, int x, int y){
-    if(x == -49 && y == -1) //valeur obtenue après modifications de la valeur ascii de 'O'
+    if((x+'1') == '0' && (y+'a') == '0') //valeur obtenue après modifications de la valeur ascii de 'O'
 		return true;
     else if(x>8 || x<0 || y>8 || y < 0){
         cout << "invalid position" <<endl;
@@ -91,17 +91,23 @@ bool check_eat(int position, int* board, int turn){
 }
 
 bool check_notplay(int* board, int turn){
-	
-	bool r=false;
+/*
+ * Vérifie si le joueur peut en effet passer son tour
+ */
+	bool r = true;
+	cout << "Vérifions si tu ne peux vraiment pas jouer" << endl;
 	for(int i=0; i<64; i++){
-		if( int pos = *(board+i) == 0){
-			if(r = check_eat(pos, board, turn)){
+		if(*(board+i) == 0){
+			if(check_eat(i, board, turn)){
 				cout << "un mouvement est possible" << endl;
+				r = false;
+				break;
 			}
+			else
+				r = true;
 		}
 	}
-	return !r;
-	
+	return r;
 }
 
 void player_turn(int* turn, int* board){
@@ -123,15 +129,18 @@ void player_turn(int* turn, int* board){
 		if(input.length() == 2){               
                 y = input[0] - 'a';
                 x = input[1] - '1';
-                if(check_input(board,x,y))
-					if( x == 0 && y==0 && check_notplay(board, *turn))
+                if(check_input(board,x,y)){
+					if( (x+'1')=='0' && (y+'a')=='0' && check_notplay(board, *turn)){
+						cout << "Le joueur passe son tour" << endl;
 						break;
+					}
                     else if(check_eat(((8*(x))+(y)),board, *turn)){
                         *(board + ((8*(x))+(y))) = *turn;
                         break;
 					}
                     else
-                        cout << "mouvement impossible" << endl;
+                        cout << "mouvement impossible" << endl;	// ne doit pas s'imprimer lorsque le joueur tente, et échoue, de passer son tour
+				}
 		}          
         else
             cout << "Entrée invalide" << endl;
