@@ -13,9 +13,9 @@ void print_board(int board[64]){
 	    for(int j=0; j<8; j++){
 		    if(board[(8*i)+j]==0)
 		    	cout << ". ";
-		    else if(board[(8*i)+j]==1)
+		    else if(board[(8*i)+j]==1)	//Le joueur noir est caractérisé par l'entier 1 et les "X"
 		    	cout << "X ";
-		    else if(board[(8*i)+j]==2)
+		    else if(board[(8*i)+j]==2)	//Le joueur blanc est caractérisé par l'entier 2 et les "O"
 		    	cout << "O ";
 	    }
         cout << i+1 << endl;
@@ -84,6 +84,8 @@ bool check_eat(int position, int* board, int turn){
     }
     return eat;
 }
+
+//bool check_pass(
 
 void player_turn(int* turn, int* board){
     
