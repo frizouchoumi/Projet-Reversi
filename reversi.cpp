@@ -6,6 +6,9 @@ using namespace std;
 int j = 0;
 
 void print_board(int board[64]){
+/*
+ * Imprime le plateau et son contenu 
+ */
 	cout << "  a b c d e f g h  " << endl;
     for(int i=0; i<8; i++){
         cout << i + 1;
@@ -24,7 +27,7 @@ void print_board(int board[64]){
 }
 
 void init_board(int* board){
-    
+	
 	for(int i = 0; i<64; i++){
 		if( i == 27 || i == 36)
 			*(board + i) = 2;
@@ -36,7 +39,9 @@ void init_board(int* board){
 }
 
 bool check_input(int* board, int x, int y){
-    if(x>8 || x<0 || y>8 || y < 0){
+    if(x == -49 && y == -1) //valeur obtenue après modifications de la valeur ascii de 'O'
+		return true;
+    else if(x>8 || x<0 || y>8 || y < 0){
         cout << "invalid position" <<endl;
         return false;
     }
@@ -85,7 +90,19 @@ bool check_eat(int position, int* board, int turn){
     return eat;
 }
 
-//bool check_pass(
+bool check_notplay(int* board, int turn){
+	
+	bool r=false;
+	for(int i=0; i<64; i++){
+		if( int pos = *(board+i) == 0){
+			if(r = check_eat(pos, board, turn)){
+				cout << "un mouvement est possible" << endl;
+			}
+		}
+	}
+	return !r;
+	
+}
 
 void player_turn(int* turn, int* board){
     
@@ -107,15 +124,18 @@ void player_turn(int* turn, int* board){
                 y = input[0] - 'a';
                 x = input[1] - '1';
                 if(check_input(board,x,y))
-                    if(check_eat(((8*(x))+(y)),board, *turn))
+					if( x == 0 && y==0 && check_notplay(board, *turn))
+						break;
+                    else if(check_eat(((8*(x))+(y)),board, *turn)){
+                        *(board + ((8*(x))+(y))) = *turn;
                         break;
+					}
                     else
                         cout << "mouvement impossible" << endl;
 		}          
         else
-            cout << "invalid position" << endl;
+            cout << "Entrée invalide" << endl;
 	}
-    *(board + ((8*(x))+(y))) = *turn;
 }
 
 
