@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 int j = 0;
+vector<int> pos_to_eat;
 
 void print_board(int board[64]){
 /*
@@ -53,13 +55,18 @@ bool check_input(int* board, int x, int y){
 
 }
 
+void eat(int* board, int turn){
+    for(int i =0; i<pos_to_eat.size();i++)
+        *(board + pos_to_eat[i]) = turn;
+}
+
 bool check_direction(int position, int* board, int direction, int turn,int* pos_eat){
 
     if(position + direction >= 0 && position + direction < 63){
         if(*(board + position + direction) == turn){
             *(pos_eat + j) = position;
-            for(int i =0; i<=j;i++)
-                *(board + *(pos_eat + i)) = turn;
+            for(int i = 0; i <= j;i++)
+                pos_to_eat.push_back (*(pos_eat +i));
             return true;
         }
         else if (*(board + position + direction) == 0)
@@ -112,6 +119,7 @@ void player_turn(int* turn, int* board){
     string input = "";
     int x =0;
     int y =0;
+    pos_to_eat.clear();
     if(*turn == 2){
         cout << "White player turn" << endl;
         *turn = 1;        
@@ -135,6 +143,7 @@ void player_turn(int* turn, int* board){
                 else if(check_input(board,x,y)){
                     if(check_eat(((8*(x))+(y)),board, *turn)){
                         *(board + ((8*(x))+(y))) = *turn;
+                        eat( board, *turn);
                         break;
 					}
                     else
@@ -150,7 +159,6 @@ void player_turn(int* turn, int* board){
 int main(int argc, char *argv[]){	
 
     int board[64] = {0};
-
     int turn = 2;
     init_board(&board[0]);
 	print_board(board);
